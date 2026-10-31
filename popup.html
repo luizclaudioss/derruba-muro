@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+  body {
+    font: 13.5px system-ui, -apple-system, sans-serif;
+    width: 285px;
+    margin: 0;
+    padding: 14px;
+    color: #1f2328;
+    background: #ffffff;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  h1 {
+    font-size: 15px;
+    margin: 0;
+  }
+  .ver {
+    font-size: 11px;
+    font-weight: 400;
+    color: #656d76;
+    margin-left: 4px;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: #dafbe1;
+    color: #1a7f37;
+    display: none;
+  }
+  .host {
+    color: #656d76;
+    font-size: 12px;
+    margin-bottom: 10px;
+    word-break: break-all;
+  }
+  .toggles {
+    border-top: 1px solid #eaeef2;
+    border-bottom: 1px solid #eaeef2;
+    padding: 8px 0;
+    margin-bottom: 10px;
+  }
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  button {
+    width: 100%;
+    margin-top: 6px;
+    padding: 8px 10px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #f6f8fa;
+    color: #24292f;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  button.primary {
+    background: #1f883d;
+    border-color: #1a7f37;
+    color: #ffffff;
+    justify-content: center;
+    font-weight: 600;
+  }
+  button.primary:hover {
+    background: #1a7f37;
+  }
+  button:hover:not(.primary):not(:disabled) {
+    background: #eaeef2;
+  }
+  button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .row {
+    display: flex;
+    gap: 6px;
+  }
+  .row button {
+    justify-content: center;
+    text-align: center;
+  }
+  .kbd {
+    font-size: 10.5px;
+    color: #656d76;
+    font-weight: 400;
+  }
+  #msg {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #57606a;
+    min-height: 16px;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Derruba Muro <span class="ver" id="ver"></span></h1>
+    <span class="badge" id="countBadge"></span>
+  </div>
+  <div class="host" id="host"></div>
+
+  <div class="toggles">
+    <label><input type="checkbox" id="global"> Extensão ativa</label>
+    <label><input type="checkbox" id="site"> Ativa neste site</label>
+    <label><input type="checkbox" id="blockScripts"> Bloquear scripts de paywall</label>
+    <label><input type="checkbox" id="removeAds"> Remover anúncios e banners</label>
+  </div>
+
+  <button id="run" class="primary">Remover bloqueio agora</button>
+  <button id="reader">
+    <span>Modo Leitura limpo</span>
+    <span class="kbd">Alt+Shift+L</span>
+  </button>
+  <button id="picker">
+    <span>Clicar para remover elemento</span>
+    <span class="kbd">Seletor</span>
+  </button>
+  <button id="clearData">
+    <span>Resetar contador de leituras</span>
+    <span class="kbd">Cookies/Local</span>
+  </button>
+
+  <div class="row">
+    <button id="archive" title="Abrir cópia arquivada no archive.ph">archive.ph</button>
+    <button id="wayback" title="Abrir cópia no Wayback Machine">Wayback Machine</button>
+  </div>
+
+  <div id="msg"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
