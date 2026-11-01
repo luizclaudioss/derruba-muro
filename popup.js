@@ -18,7 +18,7 @@ function updateCountBadge(count) {
   $('host').textContent = ok ? host : 'Abra uma página de notícia para usar.';
 
   if (!ok) {
-    ['global', 'site', 'blockScripts', 'removeAds', 'run', 'reader', 'picker', 'clearData', 'archive', 'wayback'].forEach(
+    ['global', 'site', 'blockScripts', 'removeAds', 'run', 'reader', 'picker', 'clearData'].forEach(
       (i) => ($(i).disabled = true)
     );
     return;
@@ -109,7 +109,4 @@ function updateCountBadge(count) {
       $('msg').textContent = 'Recarregue a página e tente de novo.';
     }
   };
-
-  $('archive').onclick = () => chrome.tabs.create({ url: 'https://archive.ph/newest/' + tab.url });
-  $('wayback').onclick = () => chrome.tabs.create({ url: 'https://web.archive.org/web/' + tab.url });
 })();

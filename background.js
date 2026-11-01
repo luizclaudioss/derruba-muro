@@ -98,16 +98,6 @@ function setupContextMenus() {
       title: 'Abrir em Modo Leitura',
       contexts: ['page', 'frame', 'selection']
     });
-    chrome.contextMenus.create({
-      id: 'derruba-archive',
-      title: 'Abrir cópia no archive.ph',
-      contexts: ['page', 'link']
-    });
-    chrome.contextMenus.create({
-      id: 'derruba-wayback',
-      title: 'Abrir no Wayback Machine',
-      contexts: ['page', 'link']
-    });
   });
 }
 
@@ -130,12 +120,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
-  const targetUrl = info.linkUrl || info.pageUrl || (tab && tab.url);
-  if (info.menuItemId === 'derruba-archive' && targetUrl) {
-    chrome.tabs.create({ url: 'https://archive.ph/newest/' + targetUrl });
-  } else if (info.menuItemId === 'derruba-wayback' && targetUrl) {
-    chrome.tabs.create({ url: 'https://web.archive.org/web/' + targetUrl });
-  } else if (info.menuItemId === 'derruba-picker' && tab && tab.id) {
+  if (info.menuItemId === 'derruba-picker' && tab && tab.id) {
     chrome.tabs.sendMessage(tab.id, { type: 'PICKER' }).catch(() => {});
   } else if (info.menuItemId === 'derruba-reader' && tab && tab.id) {
     chrome.tabs.sendMessage(tab.id, { type: 'READER' }).catch(() => {});

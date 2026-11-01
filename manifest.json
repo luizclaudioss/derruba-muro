@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Derruba Muro",
-  "version": "1.3.0",
-  "description": "Remove sobreposições de paywall, avisos de adblock e banners de anúncios em sites de notícias, restaura textos truncados, libera a rolagem e abre cópias arquivadas.",
+  "version": "1.5.0",
+  "description": "Remove sobreposições de paywall, avisos de adblock e banners de anúncios em sites de notícias, restaura textos truncados e libera a rolagem.",
   "permissions": [
     "storage",
     "activeTab",

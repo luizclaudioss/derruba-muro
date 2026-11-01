@@ -168,6 +168,23 @@
     return el.matches(PROTECTED) || !!el.querySelector(PROTECTED);
   }
 
+  // Lê o texto de um elemento ignorando <script>, <style> e <noscript>, sem forçar reflow/layout como o innerText
+  function getCleanText(el) {
+    if (!el) return '';
+    if (!el.querySelector('script, style, noscript')) {
+      return (el.textContent || '').trim();
+    }
+    let out = '';
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const p = node.parentElement;
+      if (p && p.matches('script, style, noscript')) continue;
+      out += node.nodeValue + ' ';
+    }
+    return out.trim();
+  }
+
   // Sobe na árvore DOM até encontrar o wrapper externo que só envolve o anúncio e o rótulo "CONTINUA DEPOIS DA PUBLICIDADE"
   function findSafeAdWrapper(el) {
     let curr = el;
@@ -184,12 +201,12 @@
     ) {
       // Se o elemento pai tiver parágrafos reais da notícia, paramos antes dele
       const hasArticleParagraph = [...parent.querySelectorAll('p')].some((p) => {
-        const t = (p.innerText || '').trim();
+        const t = getCleanText(p);
         return t.length > 90 && !AD_LABEL_EXACT.test(t);
       });
       if (hasArticleParagraph) break;
 
-      const text = (parent.innerText || '').trim();
+      const text = getCleanText(parent);
       const stripped = text.replace(AD_LABEL_EXACT, '').trim();
       if (stripped.length > 80) break;
 
@@ -202,7 +219,7 @@
 
   function collapseParentIfEmpty(parent) {
     if (!parent || parent === document.body || parent === document.documentElement) return;
-    const visibleText = (parent.innerText || '').replace(AD_LABEL_EXACT, '').trim();
+    const visibleText = getCleanText(parent).replace(AD_LABEL_EXACT, '').trim();
     if (!visibleText && !parent.querySelector('img, video, canvas, article, h1, h2, h3, p')) {
       parent.style.setProperty('min-height', '0', 'important');
       parent.style.setProperty('height', 'auto', 'important');
@@ -238,8 +255,7 @@
     for (const el of candidates) {
       if (!el.isConnected || isProtected(el)) continue;
 
-      // Usa innerText (não textContent) para não pegar código de <script> interno
-      const directText = (el.innerText || '').trim();
+      const directText = getCleanText(el);
       let matchesLabel = directText.length > 0 && directText.length <= 70 && AD_LABEL_EXACT.test(directText);
 
       // Alguns portais (como Motorsport/UOL) colocam "ANÚNCIO" ou "CONTINUA DEPOIS DA PUBLICIDADE" em ::before / ::after
