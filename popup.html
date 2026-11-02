@@ -20,6 +20,15 @@
   h1 {
     font-size: 15px;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  h1 img {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    object-fit: cover;
   }
   .ver {
     font-size: 11px;
@@ -104,7 +113,7 @@
 </head>
 <body>
   <div class="header">
-    <h1>Derruba Muro <span class="ver" id="ver"></span></h1>
+    <h1><img src="icons/icon32.png" alt=""> Derruba Muro <span class="ver" id="ver"></span></h1>
     <span class="badge" id="countBadge"></span>
   </div>
   <div class="host" id="host"></div>
